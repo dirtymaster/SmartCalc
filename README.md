@@ -2,6 +2,12 @@
 Implementation of a calculator with a user interface, mathematical functions and plotting. The program is developed in C++ language of C++17 standard and QT Creator.
 Users are able to enter up to 255 characters. Domain and codomain of a function are limited to numbers from -1000000 to 1000000.
 
+### Install
+```
+cd src
+make install
+```
+
 ### Arithmetic operators
 | Operator name | Infix notation |
 | --------- | ------ |
