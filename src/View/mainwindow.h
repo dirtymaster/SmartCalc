@@ -1,14 +1,14 @@
 #ifndef SRC_MAINWINDOW_H_
 #define SRC_MAINWINDOW_H_
 
+#include <qcustomplot.h>
+
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QVector>
 #include <string>
 
-#include <qcustomplot.h>
-
-#include "controller.h"
+#include "../Controller/controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,11 +19,11 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
- public:
+public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
- private slots:
+private slots:
 
     void on_pushButton_1_clicked();
 
@@ -89,7 +89,7 @@ class MainWindow : public QMainWindow {
 
     void on_pushButton_Graphics_clicked();
 
- private:
+private:
     Ui::MainWindow *ui;
     QVector<double> x, y;
 };

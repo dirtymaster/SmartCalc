@@ -1,17 +1,17 @@
 #ifndef SRC_MODEL_H_
 #define SRC_MODEL_H_
 
-#include <stack>
-#include <vector>
-
 #include <math.h>
 #include <string.h>
+
+#include <stack>
+#include <vector>
 
 namespace s21 {
 const int ALLOCATED_SIZE = 256;
 
 class Model {
- private:
+private:
     struct Lexeme {
         long double value;
         int priority;
@@ -53,22 +53,18 @@ class Model {
     bool CheckStrlen(const char* input_expression);
     bool MainCalculation(InputStringParsing& input_string_parsing_obj);
 
- public:
-    bool MainFunction(const char* input_expression,
-                      const char* input_expression_x);
+public:
+    bool MainFunction(const char* input_expression, const char* input_expression_x);
     bool MainFunction(const char* input_expression, long double x);
-    bool CheckGraphicParameters(const char* x_min_char_str,
-                                const char* x_max_char_str,
-                                const char* y_min_char_str,
-                                const char* y_max_char_str,
-                                const char* step_char_str, long double& x_min,
-                                long double& x_max, long double& y_min,
-                                long double& y_max, long double& step);
+    bool CheckGraphicParameters(const char* x_min_char_str, const char* x_max_char_str,
+                                const char* y_min_char_str, const char* y_max_char_str,
+                                const char* step_char_str, long double& x_min, long double& x_max,
+                                long double& y_min, long double& y_max, long double& step);
     long double GetResult() { return result_; }
 };
 
 class Model::InputStringParsing {
- public:
+public:
     std::vector<Lexeme> lexemes_;
 
     explicit InputStringParsing(const char* input_expression) {
@@ -100,7 +96,7 @@ class Model::InputStringParsing {
     void CaseNumber();
     void FinalCheck();
 
- private:
+private:
     bool return_value_;
     int input_cnt_, lex_amount_, bracket_count_;
     const char* input_expression_;
@@ -109,7 +105,7 @@ class Model::InputStringParsing {
 };
 
 class Model::ReversePolishNotationCalculation {
- public:
+public:
     ReversePolishNotationCalculation() {
         stack_.reserve(ALLOCATED_SIZE);
         output_.reserve(ALLOCATED_SIZE);
@@ -121,7 +117,7 @@ class Model::ReversePolishNotationCalculation {
 
     int ReversePolishNotationCalculator(long double& result);
 
- private:
+private:
     std::vector<Lexeme> stack_;
     std::vector<Lexeme> output_;
     int stack_cnt_, output_amount_;

@@ -13,23 +13,15 @@ endif
 
 TEST_COMPILE = $(CC+FLAGS) tests.cpp s21_smartcalc.a $(GTEST_FLAGS) -L. -ls21_smartcalc
 
+all: test install clean
 
-all: install test clean
-
-build:
-	mkdir build
-	cd ./build/ && qmake ../ && make
-
-install: uninstall build
-	@mkdir $(HOME)/Desktop/SmartCalc
-	@cp -rf $(APP) $(HOME)/Desktop/SmartCalc/
-	make clean
+install:
+	cd View && qmake && make && make clean && rm Makefile
+	mv View/SmartCalc.app/Contents/MacOS/SmartCalc .
+	./SmartCalc
 
 uninstall:
-	@rm -rf $(HOME)/Desktop/SmartCalc*
-
-dvi:
-	open dvi.tex
+	rm -rf View/SmareCalc.app SmartCalc
 
 dist:
 	rm -rf Archive_SmartCalc_v1.0/
@@ -46,7 +38,7 @@ test: s21_smartcalc.a
 
 gcov_report:
 	rm -f *.g*
-	$(CC+FLAGS) tests.cpp model.cpp controller.cpp $(GTEST_FLAGS) $(GCOVFLAGS)
+	$(CC+FLAGS) tests.cpp Model/model.cpp Controller/controller.cpp $(GTEST_FLAGS) $(GCOVFLAGS)
 	./a.out
 	lcov -t a.out -o rep.info -c -d .
 	genhtml -o report rep.info
@@ -61,21 +53,14 @@ s21_smartcalc.a: s21_smartcalc.o
 	cp libs21_smartcalc.a ls21_smartcalc.a
 
 s21_smartcalc.o:
-	$(CC+FLAGS) -c tests.cpp model.cpp controller.cpp
+	$(CC+FLAGS) -c tests.cpp Model/model.cpp Controller/controller.cpp
 
 check: test
 	CK_FORK=no leaks --atExit -- ./a.out
-	python3 ../materials/linters/cpplint.py --extensions=cpp tests.cpp model.cpp controller.cpp mainwindow.cpp main.cpp controller.h mainwindow.h model.h
-	make tests
-	make clean
 
-clean:
-	rm -rf *.o *.a
-	rm -rf *.gcda *.gcno *.info
-	rm -rf s21_test report
-	rm -rf s21_calc s21_test
-	rm -rf ./build*
-	rm -rf a.out
+clean: uninstall
+	rm -rf *.o *.a *.gcda *.gcno *.info s21_test report s21_calc s21_test a.out \
+	build-SmartCalc-Desktop_x86_darwin_generic_mach_o_64bit-Debug
 
 rebuild: clean uninstall all
 

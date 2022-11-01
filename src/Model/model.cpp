@@ -1,8 +1,7 @@
 #include "model.h"
 
 namespace s21 {
-bool Model::MainFunction(const char* input_expression,
-                         const char* input_expression_x) {
+bool Model::MainFunction(const char* input_expression, const char* input_expression_x) {
     bool return_value = true;
     if ((int)strlen(input_expression) > ALLOCATED_SIZE) return_value = false;
     InputStringParsing input_string_parsing_obj(input_expression);
@@ -12,12 +11,10 @@ bool Model::MainFunction(const char* input_expression,
         if (return_value) {
             long double x;
             bool x_correctness = false;
-            for (int i = 0; input_string_parsing_obj.lexemes_[i].type != -1;
-                 i++) {
+            for (int i = 0; input_string_parsing_obj.lexemes_[i].type != -1; i++) {
                 if (input_string_parsing_obj.lexemes_[i].type == VARIABLE) {
                     if (!x_correctness) {
-                        x_correctness =
-                            CheckDoubleCorrectness(input_expression_x, x);
+                        x_correctness = CheckDoubleCorrectness(input_expression_x, x);
                         if (!x_correctness) {
                             return_value = false;
                             break;
@@ -46,8 +43,7 @@ bool Model::MainFunction(const char* input_expression, long double x) {
             return_value = input_string_parsing_obj.Parsing();
 
             if (return_value) {
-                for (int i = 0; input_string_parsing_obj.lexemes_[i].type != -1;
-                     i++) {
+                for (int i = 0; input_string_parsing_obj.lexemes_[i].type != -1; i++) {
                     if (input_string_parsing_obj.lexemes_[i].type == VARIABLE) {
                         input_string_parsing_obj.lexemes_[i].type = NUMBER;
                         input_string_parsing_obj.lexemes_[i].value = x;
@@ -69,10 +65,8 @@ bool Model::CheckStrlen(const char* input_expression) {
 bool Model::MainCalculation(InputStringParsing& input_string_parsing_obj) {
     bool return_value = true;
     ReversePolishNotationCalculation reverse_polish_notation_obj;
-    reverse_polish_notation_obj.TranslateToRpn(
-        input_string_parsing_obj.lexemes_);
-    return_value =
-        reverse_polish_notation_obj.ReversePolishNotationCalculator(result_);
+    reverse_polish_notation_obj.TranslateToRpn(input_string_parsing_obj.lexemes_);
+    return_value = reverse_polish_notation_obj.ReversePolishNotationCalculator(result_);
 
     if (return_value && isnan(result_)) {
         return_value = false;
@@ -264,24 +258,15 @@ bool Model::InputStringParsing::Parsing() {
 
 void Model::InputStringParsing::CaseOpenBracket() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD ||
-            lexemes_[lex_amount_ - 1].type == SIN ||
-            lexemes_[lex_amount_ - 1].type == COS ||
-            lexemes_[lex_amount_ - 1].type == TAN ||
-            lexemes_[lex_amount_ - 1].type == ACOS ||
-            lexemes_[lex_amount_ - 1].type == ASIN ||
-            lexemes_[lex_amount_ - 1].type == ATAN ||
-            lexemes_[lex_amount_ - 1].type == SQRT ||
-            lexemes_[lex_amount_ - 1].type == LN ||
-            lexemes_[lex_amount_ - 1].type == LOG) {
+        if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET || lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == MUL ||
+            lexemes_[lex_amount_ - 1].type == DIV || lexemes_[lex_amount_ - 1].type == POW ||
+            lexemes_[lex_amount_ - 1].type == MOD || lexemes_[lex_amount_ - 1].type == SIN ||
+            lexemes_[lex_amount_ - 1].type == COS || lexemes_[lex_amount_ - 1].type == TAN ||
+            lexemes_[lex_amount_ - 1].type == ACOS || lexemes_[lex_amount_ - 1].type == ASIN ||
+            lexemes_[lex_amount_ - 1].type == ATAN || lexemes_[lex_amount_ - 1].type == SQRT ||
+            lexemes_[lex_amount_ - 1].type == LN || lexemes_[lex_amount_ - 1].type == LOG) {
             lexemes_[lex_amount_].type = OPEN_BRACKET;
             lexemes_[lex_amount_].priority = -1;
             bracket_count_++;
@@ -299,8 +284,7 @@ void Model::InputStringParsing::CaseOpenBracket() {
 
 void Model::InputStringParsing::CaseCloseBracket() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-            lexemes_[lex_amount_ - 1].type == VARIABLE ||
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
             lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = CLOSE_BRACKET;
             lexemes_[lex_amount_].priority = -1;
@@ -316,8 +300,7 @@ void Model::InputStringParsing::CaseCloseBracket() {
 
 void Model::InputStringParsing::CaseMinus() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-            lexemes_[lex_amount_ - 1].type == VARIABLE ||
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
             lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = BINARY_MINUS;
             lexemes_[lex_amount_].priority = 1;
@@ -338,8 +321,7 @@ void Model::InputStringParsing::CaseMinus() {
 
 void Model::InputStringParsing::CasePlus() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-            lexemes_[lex_amount_ - 1].type == VARIABLE ||
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
             lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = BINARY_PLUS;
             lexemes_[lex_amount_].priority = 1;
@@ -360,8 +342,7 @@ void Model::InputStringParsing::CasePlus() {
 
 void Model::InputStringParsing::CaseMul() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-            lexemes_[lex_amount_ - 1].type == VARIABLE ||
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
             lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = MUL;
             lexemes_[lex_amount_].priority = 2;
@@ -376,8 +357,7 @@ void Model::InputStringParsing::CaseMul() {
 
 void Model::InputStringParsing::CaseDiv() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-            lexemes_[lex_amount_ - 1].type == VARIABLE ||
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
             lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = DIV;
             lexemes_[lex_amount_].priority = 2;
@@ -392,8 +372,7 @@ void Model::InputStringParsing::CaseDiv() {
 
 void Model::InputStringParsing::CasePow() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-            lexemes_[lex_amount_ - 1].type == VARIABLE ||
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
             lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = POW;
             lexemes_[lex_amount_].priority = 3;
@@ -408,14 +387,10 @@ void Model::InputStringParsing::CasePow() {
 
 void Model::InputStringParsing::CaseX() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
+        if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET || lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == MUL ||
+            lexemes_[lex_amount_ - 1].type == DIV || lexemes_[lex_amount_ - 1].type == POW ||
             lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = VARIABLE;
             lexemes_[lex_amount_].priority = -1;
@@ -432,14 +407,10 @@ void Model::InputStringParsing::CaseX() {
 void Model::InputStringParsing::CaseSin() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = SIN;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -456,14 +427,10 @@ void Model::InputStringParsing::CaseSin() {
 void Model::InputStringParsing::CaseSqrt() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = SQRT;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -480,14 +447,10 @@ void Model::InputStringParsing::CaseSqrt() {
 void Model::InputStringParsing::CaseCos() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = COS;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -504,14 +467,10 @@ void Model::InputStringParsing::CaseCos() {
 void Model::InputStringParsing::CaseTan() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = TAN;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -527,9 +486,8 @@ void Model::InputStringParsing::CaseTan() {
 
 void Model::InputStringParsing::CaseMod() {
     if (lex_amount_ != 0) {
-        if (lexemes_[lex_amount_ - 1].type == NUMBER ||
-        lexemes_[lex_amount_ - 1].type == VARIABLE ||
-        lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
+        if (lexemes_[lex_amount_ - 1].type == NUMBER || lexemes_[lex_amount_ - 1].type == VARIABLE ||
+            lexemes_[lex_amount_ - 1].type == CLOSE_BRACKET) {
             lexemes_[lex_amount_].type = MOD;
             lexemes_[lex_amount_].priority = 2;
             lex_amount_++;
@@ -544,14 +502,10 @@ void Model::InputStringParsing::CaseMod() {
 void Model::InputStringParsing::CaseAsin() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = ASIN;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -568,14 +522,10 @@ void Model::InputStringParsing::CaseAsin() {
 void Model::InputStringParsing::CaseAcos() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = ACOS;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -592,14 +542,10 @@ void Model::InputStringParsing::CaseAcos() {
 void Model::InputStringParsing::CaseAtan() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = ATAN;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -616,14 +562,10 @@ void Model::InputStringParsing::CaseAtan() {
 void Model::InputStringParsing::CaseLn() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = LN;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -640,14 +582,10 @@ void Model::InputStringParsing::CaseLn() {
 void Model::InputStringParsing::CaseLog() {
     if (lex_amount_ != 0) {
         if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD) {
+            lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == MUL || lexemes_[lex_amount_ - 1].type == DIV ||
+            lexemes_[lex_amount_ - 1].type == POW || lexemes_[lex_amount_ - 1].type == MOD) {
             lexemes_[lex_amount_].type = LOG;
             lexemes_[lex_amount_].priority = 4;
             lex_amount_++;
@@ -663,14 +601,10 @@ void Model::InputStringParsing::CaseLog() {
 
 void Model::InputStringParsing::CaseNumber() {
     if (((lex_amount_ != 0) &&
-         (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-          lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
-          lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-          lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-          lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-          lexemes_[lex_amount_ - 1].type == MUL ||
-          lexemes_[lex_amount_ - 1].type == DIV ||
-          lexemes_[lex_amount_ - 1].type == POW ||
+         (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET || lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
+          lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
+          lexemes_[lex_amount_ - 1].type == BINARY_MINUS || lexemes_[lex_amount_ - 1].type == MUL ||
+          lexemes_[lex_amount_ - 1].type == DIV || lexemes_[lex_amount_ - 1].type == POW ||
           lexemes_[lex_amount_ - 1].type == MOD)) ||
         input_cnt_ == 0) {
         char* massive_for_number = new char[ALLOCATED_SIZE]{'\0'};
@@ -678,9 +612,7 @@ void Model::InputStringParsing::CaseNumber() {
         int dot_counter = input_expression_[input_cnt_] == '.' ? 1 : 0;
         input_cnt_++;
         int k = 1;
-        for (; IsNumber(input_expression_[input_cnt_]) ||
-               input_expression_[input_cnt_] == '.';
-             k++) {
+        for (; IsNumber(input_expression_[input_cnt_]) || input_expression_[input_cnt_] == '.'; k++) {
             if (input_expression_[input_cnt_] == '.') {
                 dot_counter++;
             }
@@ -694,8 +626,7 @@ void Model::InputStringParsing::CaseNumber() {
             massive_for_number[k] = input_expression_[input_cnt_];
             k++;
             input_cnt_++;
-            if (input_expression_[input_cnt_] == '-' ||
-                input_expression_[input_cnt_] == '+') {
+            if (input_expression_[input_cnt_] == '-' || input_expression_[input_cnt_] == '+') {
                 massive_for_number[k] = input_expression_[input_cnt_];
                 k++;
                 input_cnt_++;
@@ -731,24 +662,15 @@ void Model::InputStringParsing::CaseNumber() {
 
 void Model::InputStringParsing::FinalCheck() {
     if (return_value_) {
-        if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET ||
-            lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == UNARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
-            lexemes_[lex_amount_ - 1].type == BINARY_PLUS ||
-            lexemes_[lex_amount_ - 1].type == MUL ||
-            lexemes_[lex_amount_ - 1].type == DIV ||
-            lexemes_[lex_amount_ - 1].type == POW ||
-            lexemes_[lex_amount_ - 1].type == MOD ||
-            lexemes_[lex_amount_ - 1].type == COS ||
-            lexemes_[lex_amount_ - 1].type == SIN ||
-            lexemes_[lex_amount_ - 1].type == TAN ||
-            lexemes_[lex_amount_ - 1].type == ACOS ||
-            lexemes_[lex_amount_ - 1].type == ASIN ||
-            lexemes_[lex_amount_ - 1].type == ATAN ||
-            lexemes_[lex_amount_ - 1].type == SQRT ||
-            lexemes_[lex_amount_ - 1].type == LN ||
-            lexemes_[lex_amount_ - 1].type == LOG)
+        if (lexemes_[lex_amount_ - 1].type == OPEN_BRACKET || lexemes_[lex_amount_ - 1].type == UNARY_PLUS ||
+            lexemes_[lex_amount_ - 1].type == UNARY_MINUS || lexemes_[lex_amount_ - 1].type == BINARY_MINUS ||
+            lexemes_[lex_amount_ - 1].type == BINARY_PLUS || lexemes_[lex_amount_ - 1].type == MUL ||
+            lexemes_[lex_amount_ - 1].type == DIV || lexemes_[lex_amount_ - 1].type == POW ||
+            lexemes_[lex_amount_ - 1].type == MOD || lexemes_[lex_amount_ - 1].type == COS ||
+            lexemes_[lex_amount_ - 1].type == SIN || lexemes_[lex_amount_ - 1].type == TAN ||
+            lexemes_[lex_amount_ - 1].type == ACOS || lexemes_[lex_amount_ - 1].type == ASIN ||
+            lexemes_[lex_amount_ - 1].type == ATAN || lexemes_[lex_amount_ - 1].type == SQRT ||
+            lexemes_[lex_amount_ - 1].type == LN || lexemes_[lex_amount_ - 1].type == LOG)
             return_value_ = false;
 
         if (bracket_count_ != 0) return_value_ = false;
@@ -762,8 +684,7 @@ bool IsNumber(char c) {
     return 0;
 }
 
-void Model::ReversePolishNotationCalculation::TranslateToRpn(
-    std::vector<Lexeme>& lexemes_) {
+void Model::ReversePolishNotationCalculation::TranslateToRpn(std::vector<Lexeme>& lexemes_) {
     for (int lex_cnt = 0; lexemes_[lex_cnt].type != -1; lex_cnt++) {
         if (lexemes_[lex_cnt].type == NUMBER) {
             output_amount_++;
@@ -774,8 +695,7 @@ void Model::ReversePolishNotationCalculation::TranslateToRpn(
         } else if (IsOperator(lexemes_[lex_cnt])) {
             if (stack_cnt_ >= 0) {
                 while (IsOperator(stack_[stack_cnt_]) &&
-                       stack_[stack_cnt_].priority >=
-                           lexemes_[lex_cnt].priority) {
+                       stack_[stack_cnt_].priority >= lexemes_[lex_cnt].priority) {
                     output_amount_++;
                     output_[output_amount_] = stack_[stack_cnt_];
                     stack_cnt_--;
@@ -806,8 +726,7 @@ int Model::ReversePolishNotationCalculation::IsOperator(Lexeme lexeme) {
     return return_value;
 }
 
-int Model::ReversePolishNotationCalculation::ReversePolishNotationCalculator(
-    long double& result) {
+int Model::ReversePolishNotationCalculation::ReversePolishNotationCalculator(long double& result) {
     int return_value = true;
     std::vector<Lexeme> stack;
     stack.reserve(ALLOCATED_SIZE);
@@ -819,37 +738,31 @@ int Model::ReversePolishNotationCalculation::ReversePolishNotationCalculator(
         } else if (output_[output_cnt].type == UNARY_MINUS) {
             stack[stack_cnt_].value *= -1;
         } else if (output_[output_cnt].type == BINARY_MINUS) {
-            stack[stack_cnt_ - 1].value =
-                stack[stack_cnt_ - 1].value - stack[stack_cnt_].value;
+            stack[stack_cnt_ - 1].value = stack[stack_cnt_ - 1].value - stack[stack_cnt_].value;
             stack_cnt_--;
         } else if (output_[output_cnt].type == UNARY_PLUS) {
             stack[stack_cnt_].value *= 1;
         } else if (output_[output_cnt].type == BINARY_PLUS) {
-            stack[stack_cnt_ - 1].value =
-                stack[stack_cnt_ - 1].value + stack[stack_cnt_].value;
+            stack[stack_cnt_ - 1].value = stack[stack_cnt_ - 1].value + stack[stack_cnt_].value;
             stack_cnt_--;
         } else if (output_[output_cnt].type == MUL) {
-            stack[stack_cnt_ - 1].value =
-                stack[stack_cnt_ - 1].value * stack[stack_cnt_].value;
+            stack[stack_cnt_ - 1].value = stack[stack_cnt_ - 1].value * stack[stack_cnt_].value;
             stack_cnt_--;
         } else if (output_[output_cnt].type == DIV) {
             if (stack[stack_cnt_].value == 0) {
                 return_value = false;
             } else {
-                stack[stack_cnt_ - 1].value =
-                    stack[stack_cnt_ - 1].value / stack[stack_cnt_].value;
+                stack[stack_cnt_ - 1].value = stack[stack_cnt_ - 1].value / stack[stack_cnt_].value;
                 stack_cnt_--;
             }
         } else if (output_[output_cnt].type == POW) {
-            stack[stack_cnt_ - 1].value =
-                powl(stack[stack_cnt_ - 1].value, stack[stack_cnt_].value);
+            stack[stack_cnt_ - 1].value = powl(stack[stack_cnt_ - 1].value, stack[stack_cnt_].value);
             stack_cnt_--;
         } else if (output_[output_cnt].type == MOD) {
             if (stack[stack_cnt_].value == 0) {
                 return_value = false;
             } else {
-                stack[stack_cnt_ - 1].value =
-                    fmodl(stack[stack_cnt_ - 1].value, stack[stack_cnt_].value);
+                stack[stack_cnt_ - 1].value = fmodl(stack[stack_cnt_ - 1].value, stack[stack_cnt_].value);
                 stack_cnt_--;
             }
         } else if (output_[output_cnt].type == COS) {
@@ -906,10 +819,8 @@ bool Model::CheckDoubleCorrectness(const char* input_expr_x, long double& x) {
     if (input_expr_x[str_cnt] == '+' || input_expr_x[str_cnt] == '-') {
         str_cnt++;
     }
-    if (IsNumber(input_expr_x[str_cnt]) ||
-               input_expr_x[str_cnt] == '.') {
-        while (IsNumber(input_expr_x[str_cnt]) ||
-               input_expr_x[str_cnt] == '.') {
+    if (IsNumber(input_expr_x[str_cnt]) || input_expr_x[str_cnt] == '.') {
+        while (IsNumber(input_expr_x[str_cnt]) || input_expr_x[str_cnt] == '.') {
             if (input_expr_x[str_cnt] == '.') dot_flag++;
             if (dot_flag > 1) {
                 return_value = false;
@@ -922,8 +833,7 @@ bool Model::CheckDoubleCorrectness(const char* input_expr_x, long double& x) {
             str_cnt++;
             if (input_expr_x[str_cnt] == '\0') {
                 return_value = false;
-            } else if (input_expr_x[str_cnt] == '+' ||
-                       input_expr_x[str_cnt] == '-') {
+            } else if (input_expr_x[str_cnt] == '+' || input_expr_x[str_cnt] == '-') {
                 str_cnt++;
             }
             if (return_value) {
@@ -952,23 +862,18 @@ bool Model::CheckDoubleCorrectness(const char* input_expr_x, long double& x) {
     return return_value;
 }
 
-bool Model::CheckGraphicParameters(
-    const char* x_max_char_str, const char* x_min_char_str,
-    const char* y_max_char_str, const char* y_min_char_str,
-    const char* step_char_str, long double& x_max, long double& x_min,
-    long double& y_max, long double& y_min, long double& step) {
+bool Model::CheckGraphicParameters(const char* x_max_char_str, const char* x_min_char_str,
+                                   const char* y_max_char_str, const char* y_min_char_str,
+                                   const char* step_char_str, long double& x_max, long double& x_min,
+                                   long double& y_max, long double& y_min, long double& step) {
     bool return_value = true;
     return_value = CheckDoubleCorrectness(x_max_char_str, x_max);
-    return_value = return_value ? CheckDoubleCorrectness(x_min_char_str, x_min)
-                                : return_value;
-    return_value = return_value ? CheckDoubleCorrectness(y_max_char_str, y_max)
-                                : return_value;
-    return_value = return_value ? CheckDoubleCorrectness(y_min_char_str, y_min)
-                                : return_value;
-    return_value = return_value ? CheckDoubleCorrectness(step_char_str, step)
-                                : return_value;
-    if (step <= 0 || x_min < -1000000 || x_max > 1000000 || y_min < -1000000 ||
-        y_max > 1000000 || x_max - x_min < step || y_max - y_min < step) {
+    return_value = return_value ? CheckDoubleCorrectness(x_min_char_str, x_min) : return_value;
+    return_value = return_value ? CheckDoubleCorrectness(y_max_char_str, y_max) : return_value;
+    return_value = return_value ? CheckDoubleCorrectness(y_min_char_str, y_min) : return_value;
+    return_value = return_value ? CheckDoubleCorrectness(step_char_str, step) : return_value;
+    if (step <= 0 || x_min < -1000000 || x_max > 1000000 || y_min < -1000000 || y_max > 1000000 ||
+        x_max - x_min < step || y_max - y_min < step) {
         return_value = false;
     }
     return return_value;

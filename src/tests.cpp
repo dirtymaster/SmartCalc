@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "controller.h"
+#include "Controller/controller.h"
 
 namespace s21 {
 const double COMPRASSION_TOLERANCE = 1e-7;
