@@ -1,6 +1,6 @@
 # SmartCalc
-1. [In English](#description)
-2. [На русском](#описание)
+1. [In English](#demonstration)
+2. [На русском](#демонстрация)
 ### Demonstration
 Click to open the YouTube video.
 
