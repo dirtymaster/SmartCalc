@@ -46,6 +46,11 @@ You can also download the executable file from Releases.
 | Computes common logarithm | log(x) |
 ***
 
+### Демонстрация
+Нажмите, чтобы открыть видео на YouTube.
+
+[![demonstration](https://img.youtube.com/vi/GPLL3D3H58s/0.jpg)](https://youtu.be/GPLL3D3H58s)
+
 ### Описание
 Реализация калькулятора с пользовательским интерфейсом, математическими функциями и построением графиков. Программа разработана на языке C++ стандарта C++17 и QT Creator.
 Пользователи могут вводить до 255 символов.
