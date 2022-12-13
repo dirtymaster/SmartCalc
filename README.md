@@ -13,8 +13,8 @@ Users are able to enter up to 255 characters.
 ### Install
 The program is designed to be installed on macOS using the make and qmake utilities.
 ```
-git clone git@github.com:abceff/SmartCalc.git
-cd src
+git clone https://github.com/abceff/SmartCalc.git
+cd SmartCalc/src
 make install
 ```
 You can also download the executable file from Releases.
@@ -58,8 +58,8 @@ You can also download the executable file from Releases.
 ### Установка
 Программа предназначена для установки на macOS с помощью утилит make и qmake.
 ```
-git clone git@github.com:abceff/SmartCalc.git
-cd src
+git clone https://github.com/abceff/SmartCalc.git
+cd SmartCalc/src
 make install
 ```
 Вы также можете загрузить исполняемый файл из Releases.
